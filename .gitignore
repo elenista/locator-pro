@@ -1,0 +1,12 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build tools & dependencies
+node_modules/
+dist/
+npm-debug.log
+
+# Development
+.vscode/
+.env
