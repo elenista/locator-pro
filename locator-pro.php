@@ -175,3 +175,23 @@ function lp_register_rest_fields() {
     ));
 }
 add_action( 'rest_api_init', 'lp_register_rest_fields' );
+
+/**
+ * Shortcode to render the React Map
+ */
+function lp_location_shortcode() {
+    // 1. Enqueue our React Build (We will create this later)
+    wp_enqueue_script( 'lp-react-app', plugin_dir_url( __FILE__ ) . 'build/index.js', array(), '1.0.0', true );
+    //wp_enqueue_style( 'lp-react-style', plugin_dir_url( __FILE__ ) . 'build/index.css', array(), '1.0.0' );
+
+    // 2. Pass WordPress Data to React (Localization)
+    // This is how we send the REST URL to our JS
+    wp_localize_script( 'lp-react-app', 'lpData', array(
+        'root_url' => esc_url( get_rest_url() ),
+        'nonce'    => wp_create_nonce( 'wp_rest' )
+    ) );
+
+    // 3. The "Mount Point" - React will inject the app here
+    return '<div id="lp-react-root"></div>';
+}
+add_shortcode( 'locator_pro', 'lp_location_shortcode' );
