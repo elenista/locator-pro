@@ -145,3 +145,33 @@ function lp_admin_enqueue_scripts( $hook ) {
     );
 }
 add_action( 'admin_enqueue_scripts', 'lp_admin_enqueue_scripts' );
+
+/**
+ * Register custom meta fields for the REST API
+ */
+function lp_register_rest_fields() {
+    // Register Latitude
+    register_rest_field( 'location', 'latitude', array(
+        'get_callback' => function( $post_arr ) {
+            return get_post_meta( $post_arr['id'], '_lp_lat', true );
+        },
+        'update_callback' => null,
+        'schema'          => array(
+            'description' => __( 'Location latitude.', 'locator-pro' ),
+            'type'        => 'string',
+        ),
+    ));
+
+    // Register Longitude
+    register_rest_field( 'location', 'longitude', array(
+        'get_callback' => function( $post_arr ) {
+            return get_post_meta( $post_arr['id'], '_lp_lng', true );
+        },
+        'update_callback' => null,
+        'schema'          => array(
+            'description' => __( 'Location longitude.', 'locator-pro' ),
+            'type'        => 'string',
+        ),
+    ));
+}
+add_action( 'rest_api_init', 'lp_register_rest_fields' );
