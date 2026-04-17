@@ -26,7 +26,8 @@ function lp_register_location_cpt() {
     $args = array(
         'labels'             => $labels,
         'public'             => true,
-        'has_archive'        => true,
+        'has_archive'        => false,
+        'publicly_queryable' => false, // Removes "View Post" and frontend access
         'show_in_rest'       => true, // Required for Gutenberg and REST API access
         'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
         'menu_icon'          => 'dashicons-location-alt',
