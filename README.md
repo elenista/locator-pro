@@ -21,3 +21,47 @@ A high-performance, modern WordPress plugin for managing and displaying multiple
    ```bash
    git clone [https://github.com/elenista/locator-pro.git](https://github.com/elenista/locator-pro.git)
    ```
+2. Navigate to the plugin folder:
+
+```
+Bash
+cd locator-pro
+```
+
+3. Install dependencies:
+
+```
+Bash
+npm install
+```
+
+4. Build the project:
+
+```
+Bash
+npm run build
+```
+
+5. Activate the plugin through the WordPress Admin dashboard.
+
+## 🛠 Usage
+
+1. **Add Locations:** Go to the "Locations" menu in your WordPress Admin and add your points of interest. Use the built-in map search to set the exact coordinates.
+
+2. **Display Map:** Use the shortcode [lp_location_map] in any page or post to display the interactive map.
+
+## 💻 Tech Stack
+
+- **Frontend:** React.js, Leaflet, React-Leaflet.
+
+- **Backend:** WordPress Custom Post Types, REST API, PHP.
+
+- **Build Tool:** Vite with vite-plugin-singlefile for seamless WordPress integration.
+
+## 📝 License
+
+This project is licensed under the GPL-2.0 License.
+
+---
+
+Developed with ❤️ by Eleni Stavridou
