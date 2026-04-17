@@ -1,0 +1,115 @@
+/* src/style.css */
+
+.lp-plugin-container {
+    display: flex;
+    height: 400px;
+    border: 1px solid #ddd;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Sidebar Styling */
+/* Sidebar states */
+.lp-sidebar {
+    width: 220px;
+    transition: margin-left 0.3s ease;
+    overflow-y: auto;
+    background: #fdfdfd;
+    border-right: 1px solid #eee;
+    font-size: 14px;
+}
+
+.lp-sidebar.is-collapsed {
+    margin-left: -220px;
+}
+
+/* Toggle Button */
+.lp-sidebar-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-weight: bold;
+}
+
+.lp-sidebar-toggle:hover {
+    background: #f0f0f0;
+}
+
+.lp-sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.lp-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+.lp-sidebar::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.lp-location-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+    transition: all 0.2s ease;
+}
+
+.lp-location-item strong {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lp-location-item:hover {
+    background: #f0f7ff;
+}
+
+.lp-location-item.is-active {
+    background: #e7f3ff;
+    border-left: 4px solid #007cba;
+}
+
+/* Map Area */
+.lp-map-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+/* Popup Customization */
+.lp-popup-content {
+    min-width: 250px;
+    font-family: sans-serif;
+}
+
+.lp-popup-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.lp-popup-title {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: #222;
+}
+
+.lp-popup-description {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #555;
+}

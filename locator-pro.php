@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       Locator Pro (React Edition)
- * Description:       A high-end store locator built with React, Leaflet, and WP REST API.
- * Version:           1.0.0
+ * Description:       An interactive map solution for displaying multiple locations or points of interest. Featuring a dynamic React sidebar, smart auto-zoom, and seamless WP REST API integration.
+ * Version:           1.1.0
  * Author:            Eleni Stavridou
  * Text Domain:       locator-pro
  */
@@ -90,22 +90,22 @@ function lp_location_meta_box_html( $post ) {
  * Save Meta Box Data
  */
 function lp_save_location_meta( $post_id ) {
-    // 1. Verify Nonce for security
+    // Verify Nonce for security
     if ( ! isset( $_POST['lp_location_nonce'] ) || ! wp_verify_nonce( $_POST['lp_location_nonce'], 'lp_save_location_meta' ) ) {
         return;
     }
 
-    // 2. Check for Autosave
+    // Check for Autosave
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
         return;
     }
 
-    // 3. Check user permissions
+    // Check user permissions
     if ( ! current_user_can( 'edit_post', $post_id ) ) {
         return;
     }
 
-    // 4. Sanitize and Save data
+    // Sanitize and Save data
     if ( isset( $_POST['lp_lat'] ) ) {
         update_post_meta( $post_id, '_lp_lat', sanitize_text_field( $_POST['lp_lat'] ) );
     }
@@ -135,12 +135,18 @@ function lp_admin_enqueue_scripts( $hook ) {
     // Load Leaflet JS
     wp_enqueue_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
 
+    // Geocoder CSS
+    wp_enqueue_style( 'leaflet-geocoder-css', 'https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' );
+
+    // Geocoder JS
+    wp_enqueue_script( 'leaflet-geocoder-js', 'https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js', array( 'leaflet-js' ), '2.4.0', true );
+
     // Load our custom admin map script
     wp_enqueue_script( 
         'lp-admin-map', 
         plugin_dir_url( __FILE__ ) . 'js/admin-map.js', 
         array( 'leaflet-js' ), 
-        '1.0.0', 
+        '1.1.0', 
         true 
     );
 }
@@ -173,6 +179,14 @@ function lp_register_rest_fields() {
             'type'        => 'string',
         ),
     ));
+
+    // Register featured image
+    register_rest_field( 'location', 'featured_image_url', array(
+        'get_callback' => function( $post_array ) {
+            $img = wp_get_attachment_image_src( get_post_thumbnail_id( $post_array['id'] ), 'medium' );
+            return $img ? $img[0] : false;
+        }
+    ));
 }
 add_action( 'rest_api_init', 'lp_register_rest_fields' );
 
@@ -180,18 +194,19 @@ add_action( 'rest_api_init', 'lp_register_rest_fields' );
  * Shortcode to render the React Map
  */
 function lp_location_shortcode() {
-    // 1. Enqueue our React Build (We will create this later)
-    wp_enqueue_script( 'lp-react-app', plugin_dir_url( __FILE__ ) . 'build/index.js', array(), '1.0.0', true );
-    //wp_enqueue_style( 'lp-react-style', plugin_dir_url( __FILE__ ) . 'build/index.css', array(), '1.0.0' );
+    // Load Leaflet CSS from CDN for the frontend map
+    wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4' );
 
-    // 2. Pass WordPress Data to React (Localization)
-    // This is how we send the REST URL to our JS
+    // Enqueue our React Build
+    wp_enqueue_script( 'lp-react-app', plugin_dir_url( __FILE__ ) . 'build/index.js', array(), '1.1.0', true );
+
+    // Pass WordPress Data to React (Localization)
     wp_localize_script( 'lp-react-app', 'lpData', array(
         'root_url' => esc_url( get_rest_url() ),
         'nonce'    => wp_create_nonce( 'wp_rest' )
     ) );
 
-    // 3. The "Mount Point" - React will inject the app here
+    // React will inject the app here
     return '<div id="lp-react-root"></div>';
 }
 add_shortcode( 'locator_pro', 'lp_location_shortcode' );
