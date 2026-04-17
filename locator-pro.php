@@ -3,7 +3,7 @@
  * Plugin Name:       Locator Pro (React Edition)
  * Description:       A high-end store locator built with React, Leaflet, and WP REST API.
  * Version:           1.0.0
- * Author:            Your Name
+ * Author:            Eleni Stavridou
  * Text Domain:       locator-pro
  */
 
@@ -113,3 +113,34 @@ function lp_save_location_meta( $post_id ) {
     }
 }
 add_action( 'save_post', 'lp_save_location_meta' );
+
+/**
+ * Enqueue Leaflet and custom JS for the admin area
+ */
+function lp_admin_enqueue_scripts( $hook ) {
+    global $post;
+
+    // Only load on Location post type edit/new screens
+    if ( $hook !== 'post.php' && $hook !== 'post-new.php' ) {
+        return;
+    }
+    if ( get_post_type( $post ) !== 'location' ) {
+        return;
+    }
+
+    // Load Leaflet CSS
+    wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4' );
+
+    // Load Leaflet JS
+    wp_enqueue_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
+
+    // Load our custom admin map script
+    wp_enqueue_script( 
+        'lp-admin-map', 
+        plugin_dir_url( __FILE__ ) . 'js/admin-map.js', 
+        array( 'leaflet-js' ), 
+        '1.0.0', 
+        true 
+    );
+}
+add_action( 'admin_enqueue_scripts', 'lp_admin_enqueue_scripts' );
