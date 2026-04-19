@@ -6,7 +6,7 @@ A high-performance, modern WordPress plugin for managing and displaying multiple
 
 ## 🌐 Live Demo
 You can see the plugin in action on a real production site:
-**<a href="https://travelnerds.gr/" target="_blank">View Live at TravelNerds.gr</a>**
+**[View Live Demo at TravelNerds.gr ↗](https://travelnerds.gr/)**
 
 ![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
