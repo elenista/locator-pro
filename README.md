@@ -2,9 +2,27 @@
 
 A high-performance, modern WordPress plugin for managing and displaying multiple locations or points of interest. Built with **React 18**, **Leaflet**, and the **WordPress REST API**.
 
+![Locator Pro Demo](frontend-gif.gif)
+
+## 🌐 Live Demo
+You can see the plugin in action on a real production site:
+**[View Live at TravelNerds.gr](https://travelnerds.gr/)**
+
 ![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
 ![React](https://img.shields.io/badge/React-18-blue.svg)
+
+---
+
+## 📸 Screenshots
+
+### User Interface (Front-end)
+*Interactive map with dynamic sidebar and custom popups.*
+![Front-end Interface](frontend.jpg)
+
+### Admin Management (Back-end)
+*Easy location management with built-in OpenStreetMap Geocoding.*
+![Admin Panel](admin-1.jpg)
 
 ## 🌟 Features
 
